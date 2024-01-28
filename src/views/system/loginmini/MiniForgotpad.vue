@@ -4,11 +4,14 @@
       <div class="aui-form">
         <div class="aui-image">
           <div class="aui-image-text">
-            <img :src="adTextImg" alt="" />
+<!--            <img :src="adTextImg" alt="" />-->
           </div>
         </div>
         <div class="aui-formBox">
           <div class="aui-formWell">
+            <div>
+              <img :src="adTextImg">
+            </div>
             <div class="aui-step-box">
               <div class="aui-step-item" :class="activeKey === 1 ? 'activeStep' : ''">
                 <div class="aui-step-tags">
@@ -97,7 +100,7 @@
   import { useMessage } from '/@/hooks/web/useMessage';
   import { getCaptcha, passwordChange, phoneVerify } from '/@/api/sys/user';
   import logoImg from '/@/assets/loginmini/icon/jeecg_logo.png'
-  import adTextImg from '/@/assets/loginmini/icon/jeecg_ad_text.png'
+  import adTextImg from '/@/assets/loginmini/icon/login_text.png'
   import successImg from '/@/assets/loginmini/icon/icon-success.png'
 
   //下一步控制

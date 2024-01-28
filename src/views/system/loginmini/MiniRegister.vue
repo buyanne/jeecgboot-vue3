@@ -4,11 +4,14 @@
       <div class="aui-form">
         <div class="aui-image">
           <div class="aui-image-text">
-            <img :src="jeecgAdTextImg" alt="" />
+<!--            <img :src="jeecgAdTextImg" alt="" />-->
           </div>
         </div>
         <div class="aui-formBox">
           <div class="aui-formWell">
+            <div>
+              <img :src="jeecgAdTextImg">
+            </div>
             <a-form ref="formRef" :model="formData">
               <div class="aui-flex aui-form-nav aui-clear-left" style="padding-bottom: 21px">
                 <div class="aui-flex-box activeNav on">{{t('sys.login.signUpFormTitle')}}</div>
@@ -89,7 +92,7 @@
   import { SmsEnum } from '/@/views/sys/login/useLogin';
   import { useMessage } from '/@/hooks/web/useMessage';
   import logoImg from '/@/assets/loginmini/icon/jeecg_logo.png';
-  import jeecgAdTextImg from '/@/assets/loginmini/icon/jeecg_ad_text.png';
+  import jeecgAdTextImg from '/@/assets/loginmini/icon/login_text.png';
   import eyeKImg from '/@/assets/loginmini/icon/icon-eye-k.png';
   import eyeGImg from '/@/assets/loginmini/icon/icon-eye-g.png';
   import { useI18n } from "/@/hooks/web/useI18n";
