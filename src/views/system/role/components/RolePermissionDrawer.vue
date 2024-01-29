@@ -33,13 +33,13 @@
     >
       <template #title="{ slotTitle, ruleFlag }">
         {{ slotTitle }}
-        <Icon v-if="ruleFlag" icon="ant-design:align-left-outlined" style="margin-left: 5px; color: red"></Icon>
+        <Icon v-if="ruleFlag" icon="ant-design:align-left-outlined" style="margin-left: 5px; color: red" />
       </template>
     </BasicTree>
     <!--右下角按钮-->
     <template #footer>
-      <PopConfirmButton title="确定放弃编辑？" @confirm="closeDrawer" okText="确定" cancelText="取消">取消</PopConfirmButton>
-      <a-button @click="handleSubmit(false)" type="primary" :loading="loading" ghost style="margin-right: 0.8rem">仅保存</a-button>
+      <PopConfirmButton title="确定放弃编辑？" @confirm="closeDrawer" okText="确定" cancelText="取消">取消 </PopConfirmButton>
+      <a-button @click="handleSubmit(false)" type="primary" :loading="loading" ghost style="margin-right: 0.8rem">仅保存 </a-button>
       <a-button @click="handleSubmit(true)" type="primary" :loading="loading">保存并关闭</a-button>
     </template>
     <RoleDataRuleDrawer @register="registerDrawer1" />
@@ -52,6 +52,7 @@
   import { PopConfirmButton } from '/@/components/Button';
   import RoleDataRuleDrawer from './RoleDataRuleDrawer.vue';
   import { queryTreeListForRole, queryRolePermission, saveRolePermission } from '../role.api';
+
   const emit = defineEmits(['register']);
   //树的信息
   const treeData = ref<TreeItem[]>([]);
@@ -87,12 +88,14 @@
     defaultCheckedKeys.value = permResult;
     setDrawerProps({ loading: false });
   });
+
   /**
    * 点击选中
    */
   function onCheck(o) {
     checkedKeys.value = o.checked ? o.checked : o;
   }
+
   /**
    * 选中节点，打开数据权限抽屉
    */
@@ -102,6 +105,7 @@
     }
     openDataRuleDrawer(true, { functionId: unref(selectedKeys)[0], roleId: unref(roleId) });
   }
+
   /**
    * 数据重置
    */
@@ -113,6 +117,7 @@
     selectedKeys.value = [];
     roleId.value = '';
   }
+
   /**
    * 获取tree实例
    */
@@ -123,6 +128,7 @@
     }
     return tree;
   }
+
   /**
    * 提交
    */
@@ -133,29 +139,30 @@
       lastpermissionIds: unref(defaultCheckedKeys).join(','),
     };
     //update-begin-author:taoyan date:2023-2-11 for: issues/352 VUE角色授权重复保存
-    if(loading.value===false){
-      await doSave(params)
-    }else{
+    if (loading.value === false) {
+      await doSave(params);
+    } else {
       console.log('请等待上次执行完毕!');
     }
-    if(exit){
+    if (exit) {
       // 如果关闭
       closeDrawer();
-    }else{
+    } else {
       // 没有关闭需要重新获取选中数据
       const permResult = await queryRolePermission({ roleId: unref(roleId) });
       defaultCheckedKeys.value = permResult;
     }
   }
-  
+
   // VUE角色授权重复保存 #352
   async function doSave(params) {
     loading.value = true;
     await saveRolePermission(params);
-    setTimeout(()=>{
+    setTimeout(() => {
       loading.value = false;
-    }, 500)
+    }, 500);
   }
+
   //update-end-author:taoyan date:2023-2-11 for: issues/352 VUE角色授权重复保存
 
   /**
@@ -185,12 +192,14 @@
     position: absolute;
     width: 618px;
   }
+
   //update-begin---author:wangshuai ---date:20230202  for：抽屉弹窗标题图标下拉样式------------
   .line {
     height: 1px;
     width: 100%;
     border-bottom: 1px solid #f0f0f0;
   }
+
   .more-icon {
     font-size: 20px !important;
     color: black;
@@ -199,8 +208,10 @@
     margin-right: 2px;
     cursor: pointer;
   }
-  :deep(.jeecg-tree-header){
+
+  :deep(.jeecg-tree-header) {
     border-bottom: none;
   }
+
   //update-end---author:wangshuai ---date:20230202  for：抽屉弹窗标题图标下拉样式------------
 </style>
