@@ -46,7 +46,6 @@
   import { list, deleteOne, batchDelete, getImportUrl, getExportUrl, doReleaseData, doRevokeData } from './NlEmployeeAssessPlan.api';
   import { downloadFile } from '/@/utils/common/renderUtils';
   import { useUserStore } from '/@/store/modules/user';
-  import { doReovkeData } from '@/views/system/notice/notice.api';
   const queryParam = reactive<any>({});
   const checkedKeys = ref<Array<string | number>>([]);
   const userStore = useUserStore();
@@ -151,8 +150,8 @@
   /**
    * 撤销
    */
-  async function handleReovke(id) {
-    await doReovkeData({ id });
+  async function handleRevoke(id) {
+    await doRevokeData({ id });
     reload();
   }
   /**
@@ -184,15 +183,18 @@
       },
       {
         label: '发布',
-        ifShow: record.plan_release == 0,
-        onClick: handleRelease.bind(null, record.id),
+        ifShow: record.planRelease == 0,
+        popConfirm: {
+          title: '确认要发布吗？',
+          confirm: handleRelease.bind(null, record.id),
+        },
       },
       {
         label: '撤销',
-        ifShow: record.plan_release == 1,
+        ifShow: record.planRelease == 1,
         popConfirm: {
           title: '确定要撤销吗？',
-          confirm: handleReovke.bind(null, record.id),
+          confirm: handleRevoke.bind(null, record.id),
         },
       },
       {

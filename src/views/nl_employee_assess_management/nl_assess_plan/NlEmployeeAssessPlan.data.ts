@@ -34,7 +34,13 @@ export const columns: BasicColumn[] = [
   },
 ];
 //查询数据
-export const searchFormSchema: FormSchema[] = [];
+export const searchFormSchema: FormSchema[] = [
+  {
+    label: '计划名称',
+    field: 'planName',
+    component: 'Input',
+  },
+];
 //表单数据
 export const formSchema: FormSchema[] = [
   {
@@ -49,11 +55,6 @@ export const formSchema: FormSchema[] = [
     label: '评测计划说明',
     field: 'planContent',
     component: 'Input',
-  },
-  {
-    label: '是否发布',
-    field: 'planRelease',
-    component: 'InputNumber',
   },
   {
     label: '开始时间',
@@ -87,7 +88,6 @@ export const formSchema: FormSchema[] = [
     show: false,
   },
 ];
-
 // 高级查询数据
 export const superQuerySchema = {
   planName: { title: '计划名称', order: 0, view: 'text', type: 'string' },

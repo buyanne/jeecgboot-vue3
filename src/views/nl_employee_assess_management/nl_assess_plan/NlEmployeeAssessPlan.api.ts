@@ -11,8 +11,8 @@ enum Api {
   deleteBatch = '/nl_assess_plan/nlEmployeeAssessPlan/deleteBatch',
   importExcel = '/nl_assess_plan/nlEmployeeAssessPlan/importExcel',
   exportXls = '/nl_assess_plan/nlEmployeeAssessPlan/exportXls',
-  releaseData = '/nl_assess_plan/nlEmployeeAssessPlan/doReleaseDate',
-  revokeData = '/nl_assess_plan/nlEmployeeAssessPlan/doRevokeDate',
+  releaseData = '/nl_assess_plan/nlEmployeeAssessPlan/doReleaseData',
+  revokeData = '/nl_assess_plan/nlEmployeeAssessPlan/doRevokeData',
 }
 /**
  * 导出api
@@ -74,4 +74,3 @@ export const doReleaseData = (params) => defHttp.get({ url: Api.releaseData, par
  * @param id
  */
 export const doRevokeData = (params) => defHttp.get({ url: Api.revokeData, params });
-
