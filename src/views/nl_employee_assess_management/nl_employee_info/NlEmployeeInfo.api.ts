@@ -4,13 +4,13 @@ import { useMessage } from '/@/hooks/web/useMessage';
 const { createConfirm } = useMessage();
 
 enum Api {
-  list = '/specialist/nlSpecialistInfo/list',
-  save = '/specialist/nlSpecialistInfo/add',
-  edit = '/specialist/nlSpecialistInfo/edit',
-  deleteOne = '/specialist/nlSpecialistInfo/delete',
-  deleteBatch = '/specialist/nlSpecialistInfo/deleteBatch',
-  importExcel = '/specialist/nlSpecialistInfo/importExcel',
-  exportXls = '/specialist/nlSpecialistInfo/exportXls',
+  list = '/nl_employee_info/nlEmployeeInfo/list',
+  save = '/nl_employee_info/nlEmployeeInfo/add',
+  edit = '/nl_employee_info/nlEmployeeInfo/edit',
+  deleteOne = '/nl_employee_info/nlEmployeeInfo/delete',
+  deleteBatch = '/nl_employee_info/nlEmployeeInfo/deleteBatch',
+  importExcel = '/nl_employee_info/nlEmployeeInfo/importExcel',
+  exportXls = '/nl_employee_info/nlEmployeeInfo/exportXls',
 }
 /**
  * 导出api
