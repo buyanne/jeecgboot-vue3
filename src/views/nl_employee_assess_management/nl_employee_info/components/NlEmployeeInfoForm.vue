@@ -2,7 +2,7 @@
   <div style="min-height: 400px">
     <BasicForm @register="registerForm" />
     <div style="width: 100%; text-align: center">
-      <a-button @click="submitForm" type="primary" ghost style="margin-right: 0.8rem"> 仅保存 </a-button>
+      <a-button @click="handleSubmit" type="primary" ghost style="margin-right: 0.8rem"> 需要修改 </a-button>
       <a-button @click="submitForm" pre-icon="ant-design:check" type="primary">提 交</a-button>
     </div>
   </div>
@@ -66,7 +66,7 @@
         console.log(formData);
 
         await setFieldsValue(formData);
-        // await setProps({ disabled: formDisabled.value });
+         await setProps({ disabled: formDisabled.value });
       }
 
       /*
@@ -79,13 +79,17 @@
         let params = Object.assign({}, formData, data);
         console.log('表单数据', params);
         await saveOrUpdate(params, true);
+        await setProps({disabled:true})
       }
 
       async function handleSubmit() {
-        let data = getFieldsValue;
-        let params = Object.assign({}, formData, data);
-        console.log('表单数据', params);
-        await saveOrUpdate(params, true);
+        // const sysUser = await defHttp.get({ url: querySysUserInfo });
+        //
+        // formData = { ...sysUser };
+        // console.log(formData);
+        //
+        // await setFieldsValue(formData);
+        await setProps({disabled:false});
       }
 
       initFormData();

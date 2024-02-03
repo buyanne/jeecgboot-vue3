@@ -264,11 +264,13 @@ export const formSchema: FormSchema[] = [
       placeholder: '请选择处理状态',
       stringToNumber: true,
     },
+    dynamicDisabled: true,
   },
   {
     label: '处理意见',
     field: 'handleOpinions',
     component: 'InputTextArea',
+    dynamicDisabled: true,
   },
   // TODO 主键隐藏字段，目前写死为ID
   {
