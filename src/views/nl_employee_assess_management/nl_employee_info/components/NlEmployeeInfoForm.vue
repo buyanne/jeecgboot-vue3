@@ -18,12 +18,14 @@
   import { PopConfirmButton } from '@/components/Button';
   import { useUserStore } from '@/store/modules/user';
   import { formSchema } from '/@/components/Form/index';
+  import RegisterForm from '@/views/sys/login/RegisterForm.vue';
 
   const userStore = useUserStore();
 
   export default defineComponent({
     name: 'NlEmployeeInfoForm',
     components: {
+      RegisterForm,
       PopConfirmButton,
       BasicForm,
     },
@@ -31,12 +33,19 @@
       formData: propTypes.object.def({}),
       formBpm: propTypes.bool.def(true),
     },
-    setup(props) {
+    setup: function (props) {
       const [registerForm, { setFieldsValue, setProps, getFieldsValue }] = useForm({
         labelWidth: 150,
         schemas: getBpmFormSchema(props.formData),
         showActionButtonGroup: false,
-        baseColProps: { span: 24 },
+        baseColProps: {
+          span: 10,
+          // offset: 10,
+        },
+        labelCol: {
+          offset: 8,
+        },
+        // layout: 'vertical',
       });
 
       const formDisabled = computed(() => {
@@ -46,6 +55,7 @@
       let formData = {};
       const queryByIdUrl = '/nl_employee_info/nlEmployeeInfo/queryById';
       const querySysUserInfo = '/nl_employee_info/nlEmployeeInfo/querySysUserInfo';
+
       async function initFormData() {
         // if (props.formData.dataId == null) {
         //   const sysUser = await defHttp.get({ url: querySysUserInfo });
@@ -61,12 +71,12 @@
         // //默认是禁用
         // await setProps({ disabled: formDisabled.value });
         const sysUser = await defHttp.get({ url: querySysUserInfo });
-
+        // const sysUser = userStore.getUserInfo();
         formData = { ...sysUser };
         console.log(formData);
 
         await setFieldsValue(formData);
-         await setProps({ disabled: formDisabled.value });
+        await setProps({ disabled: formDisabled.value });
       }
 
       /*
@@ -79,7 +89,7 @@
         let params = Object.assign({}, formData, data);
         console.log('表单数据', params);
         await saveOrUpdate(params, true);
-        await setProps({disabled:true})
+        await setProps({ disabled: true });
       }
 
       async function handleSubmit() {
@@ -89,7 +99,7 @@
         // console.log(formData);
         //
         // await setFieldsValue(formData);
-        await setProps({disabled:false});
+        await setProps({ disabled: false });
       }
 
       initFormData();
@@ -103,3 +113,4 @@
     },
   });
 </script>
+<style></style>

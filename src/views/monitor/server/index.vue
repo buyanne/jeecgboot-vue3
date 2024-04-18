@@ -2,22 +2,20 @@
   <div class="p-4">
     <a-card :bordered="false" style="height: 100%">
       <a-tabs v-model:activeKey="activeKey" @change="tabChange">
-        <a-tab-pane key="1" tab="服务器信息"></a-tab-pane>
-        <a-tab-pane key="2" tab="JVM信息" force-render></a-tab-pane>
-        <a-tab-pane key="3" tab="Tomcat信息"></a-tab-pane>
+        <a-tab-pane key="1" tab="服务器信息" />
+        <a-tab-pane key="2" tab="JVM信息" force-render />
+        <a-tab-pane key="3" tab="Tomcat信息" />
         <a-tab-pane key="4" tab="磁盘监控">
-          <DiskInfo v-if="activeKey == 4" style="height: 100%"></DiskInfo>
+          <DiskInfo v-if="activeKey == 4" style="height: 100%" />
         </a-tab-pane>
       </a-tabs>
       <!--  update-begin---author:wangshuai ---date: 20230829 for：性能监控切换到磁盘监控再切回来报错列为空，不能用if判断------------>
       <BasicTable @register="registerTable" :searchInfo="searchInfo" :dataSource="dataSource" v-show="activeKey != 4">
-      <!--  update-end---author:wangshuai ---date: 20230829 for：性能监控切换到磁盘监控再切回来报错列为空，不能用if判断------------>
+        <!--  update-end---author:wangshuai ---date: 20230829 for：性能监控切换到磁盘监控再切回来报错列为空，不能用if判断------------>
         <template #tableTitle>
-          <div slot="message"
-            >上次更新时间：{{ lastUpdateTime }}
+          <div slot="message">上次更新时间：{{ lastUpdateTime }}
             <a-divider type="vertical" />
-            <a @click="handleUpdate">立即更新</a></div
-          >
+            <a @click="handleUpdate">立即更新</a></div>
         </template>
         <template #param="{ record, text }">
           <a-tag :color="textInfo[record.param].color">{{ text }}</a-tag>

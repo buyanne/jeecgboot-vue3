@@ -8,8 +8,8 @@
   import { ref, computed, unref } from 'vue';
   import { BasicModal, useModalInner } from '/@/components/Modal';
   import { BasicForm, useForm } from '/@/components/Form/index';
-  import { formSchema } from '../NlEmployeeInfo.data';
-  import { saveOrUpdate } from '../NlEmployeeInfo.api';
+  import { formSchema } from '../NlEmployeeReview.data';
+  import { saveOrUpdate } from '../NlEmployeeReview.api';
   // Emits声明
   const emit = defineEmits(['register', 'success']);
   const isUpdate = ref(true);
