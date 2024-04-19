@@ -22,7 +22,7 @@ export const columns: BasicColumn[] = [
    {
     title: '指标顺序',
     align:"center",
-    dataIndex: 'order'
+    dataIndex: 'orderNum'
    },
    {
     title: '适用阶段',
@@ -67,7 +67,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '指标顺序',
-    field: 'order',
+    field: 'orderNum',
     component: 'InputNumber',
     dynamicRules: ({model,schema}) => {
           return [
@@ -99,7 +99,7 @@ export const superQuerySchema = {
   parentId: {title: '上级节点',order: 0,view: 'number', type: 'number',},
   indexName: {title: '指标名称',order: 1,view: 'text', type: 'string',},
   indexWeight: {title: '指标权重',order: 2,view: 'number', type: 'number',},
-  order: {title: '指标顺序',order: 3,view: 'number', type: 'number',},
+  orderNum: {title: '指标顺序',order: 3,view: 'number', type: 'number',},
   stageType: {title: '适用阶段',order: 4,view: 'number', type: 'number',},
 };
 

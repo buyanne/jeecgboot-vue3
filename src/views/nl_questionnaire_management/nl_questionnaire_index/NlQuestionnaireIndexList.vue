@@ -54,7 +54,7 @@
   //注册table数据
   const { prefixCls,tableContext,onExportXls,onImportXls } = useListPage({
       tableProps:{
-           title: '问卷指标管理',
+           title: 'nl_questionnaire_index',
            api: list,
            columns,
            canResize:false,
@@ -77,7 +77,7 @@
             },
       },
        exportConfig: {
-            name:"问卷指标管理",
+            name:"nl_questionnaire_index",
             url: getExportUrl,
             params: queryParam,
           },
