@@ -11,7 +11,8 @@ export const columns: BasicColumn[] = [
   {
     title: "上级节点",
     align: "left",
-    dataIndex: "parentId"
+    dataIndex: "parentId",
+    ifShow:false
   },
   {
     title: "指标名称",
