@@ -2,12 +2,34 @@ import { BasicColumn } from "/@/components/Table";
 import { FormSchema } from "/@/components/Table";
 import { rules } from "/@/utils/helper/validator";
 import { render } from "/@/utils/common/renderUtils";
+import { useNow } from "@vueuse/core";
+// 预览数据
+export const previewColums: BasicColumn[] = [
+  {
+    title: "一级指标",
+    align: "center",
+    dataIndex: "indexName",
+    customCell: (record, index, column) => {
+      console.log(record, index, column);
+    }
+  }
+];
+
 //列表数据
 export const columns: BasicColumn[] = [
   {
     title: "测评计划",
     align: "center",
-    dataIndex: "planName"
+    dataIndex: "planName",
+    customCell: (record, index, column) => {
+      // console.log(column)
+      // if (index == 0) {
+      //   return { rowSpan: 3 };
+      // } else {
+      //   return { rowSpan: 0 };
+      // }
+      // console.log(record.id)
+    }
   },
   {
     title: "问卷类型",
@@ -24,26 +46,7 @@ export const columns: BasicColumn[] = [
     align: "center",
     dataIndex: "questionDescription"
   },
-  {
-    title: "单选题小分",
-    align: "center",
-    dataIndex: "singleScore"
-  },
-  {
-    title: "单选题数量",
-    align: "center",
-    dataIndex: "singleNum"
-  },
-  {
-    title: "多选题小分",
-    align: "center",
-    dataIndex: "multiScore"
-  },
-  {
-    title: "多选题数量",
-    align: "center",
-    dataIndex: "multiNum"
-  },
+
   {
     title: "问卷总分",
     align: "center",
@@ -53,11 +56,6 @@ export const columns: BasicColumn[] = [
     title: "问卷完成总时间",
     align: "center",
     dataIndex: "totalTime"
-  },
-  {
-    title: "问卷创建时间",
-    align: "center",
-    dataIndex: "questionAddTime"
   },
   {
     title: "问卷开始时间",
@@ -72,7 +70,29 @@ export const columns: BasicColumn[] = [
 
 ];
 //查询数据
-export const searchFormSchema: FormSchema[] = [];
+export const searchFormSchema: FormSchema[] = [
+
+  {
+    label: "问卷标题",
+    field: "questionTitle",
+    // required: true,
+    component: "Input"
+  },
+  {
+    label: "问卷类型",
+    field: "questionnaireType",
+    component: "JTreeSelect",
+    // required: true,
+    componentProps: {
+      dict: "nl_questionnaire_index,index_name,id",
+      pidField: "parent_id"
+    },
+    colProps: {
+      span: 8,
+      offset: 2
+    }
+  }
+];
 //表单数据
 export const formSchema: FormSchema[] = [
   // {
@@ -89,91 +109,110 @@ export const formSchema: FormSchema[] = [
     label: "测评计划",
     field: "planId",
     component: "JSearchSelect",
+    required: true,
     componentProps: {
       dict: "nl_employee_assess_plan,plan_name,id",
       async: true
+    },
+    colProps: {
+      span: 8,
+      offset: 4
     }
   },
   {
     label: "问卷类型",
     field: "questionnaireType",
     component: "JTreeSelect",
+    required: true,
     componentProps: {
       dict: "nl_questionnaire_index,index_name,id",
       pidField: "parent_id"
+    },
+    colProps: {
+      span: 8,
+      offset: 2
     }
   },
   {
     label: "问卷标题",
     field: "questionTitle",
+    required: true,
     component: "Input"
   },
   {
     label: "问卷说明",
     field: "questionDescription",
-    component: "Input"
+    component: "InputTextArea"
   },
   {
-    label: "单选题小分",
-    field: "singleScore",
-    component: "InputNumber"
+    label: "题目类型",
+    field: "quesitonType",
+    component: "JTreeSelect",
+    required: true,
+    componentProps: {
+      dict: "nl_questionnaire_index,index_name,id",
+      pidField: "parent_id"
+    },
+    colProps: {
+      span: 8,
+      offset: 8
+    }
   },
   {
-    label: "单选题数量",
-    field: "singleNum",
-    component: "InputNumber"
+    label: "题目数量",
+    field: "questionNum",
+    component: "JInput",
+    required: true,
+    colProps: {
+      span: 8,
+      offset: 4
+    }
   },
   {
-    label: "多选题小分",
-    field: "multiScore",
-    component: "InputNumber"
-  },
-  {
-    label: "多选题数量",
-    field: "multiNum",
-    component: "InputNumber"
+    label: "每题分数",
+    field: "eachQuestionScore",
+    component: "Input",
+    required: true,
+    colProps: {
+      span: 8,
+      offset: 2
+    }
   },
   {
     label: "问卷总分",
     field: "totalScore",
-    component: "InputNumber"
+    component: "AutoComplete",
+    componentProps: {},
+    colProps: {
+      span: 8,
+      offset: 4
+    },
+    required: true
   },
   {
-    label: "问卷完成总时间",
+    label: "完成时间",
     field: "totalTime",
     component: "Input",
-    labelWidth:5,
+    required: true,
+    // labelWidth: 5,
     componentProps: {
-      suffix:'分钟',
+      suffix: "分钟"
+    },
+    colProps: {
+      span: 8,
+      offset: 2
     }
   },
-  {
-    label: "问卷开始时间",
-    field: "questionStartTime",
-    component: "DatePicker",
-    componentProps: {
-      showTime: true,
-      valueFormat: "YYYY-MM-DD HH:mm:ss"
-    }
-  },
-  {
-    label: "问卷结束时间",
-    field: "questionEndTime",
-    component: "DatePicker",
-    componentProps: {
-      showTime: true,
-      valueFormat: "YYYY-MM-DD HH:mm:ss"
-    }
-  },
-  {
-    label: "问卷创建时间",
-    field: "questionAddTime",
-    component: "DatePicker",
-    componentProps: {
-      showTime: true,
-      valueFormat: "YYYY-MM-DD HH:mm:ss"
-    }
-  },
+  // {
+  //   label: "问卷创建时间",
+  //   field: "questionAddTime",
+  //   component: "DatePicker",
+  //   // valueField:useNow(),
+  //   componentProps: {
+  //     showTime: true,
+  //     valueFormat: "YYYY-MM-DD HH:mm:ss"
+  //   }
+  // },
   // TODO 主键隐藏字段，目前写死为ID
   {
     label: "",

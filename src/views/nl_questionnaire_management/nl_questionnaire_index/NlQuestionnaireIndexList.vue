@@ -1,10 +1,12 @@
-
 <template>
   <div>
     <!--引用表格-->
     <BasicTable @register="registerTable" :rowSelection="rowSelection">
       <!--插槽:table标题-->
       <template #tableTitle>
+        <a-button type="primary" @click="handleAllDetail">
+          预览
+        </a-button>
         <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined">
           新增问卷指标
         </a-button>
@@ -38,6 +40,7 @@
     <!-- 表单区域 -->
     <NlQuestionnaireIndexModal @register="registerModal"
                                @success="handleSuccess"></NlQuestionnaireIndexModal>
+    <IndexDrawer @register="registerDrawer" @success="handleSuccess"></IndexDrawer>
   </div>
 </template>
 
@@ -48,6 +51,13 @@ import { useModal } from "/@/components/Modal";
 import { useListPage } from "/@/hooks/system/useListPage";
 import NlQuestionnaireIndexModal from "./components/NlQuestionnaireIndexModal.vue";
 import { columns, searchFormSchema, superQuerySchema } from "./NlQuestionnaireIndex.data";
+
+/*
+* 添加抽屉
+* */
+import IndexDrawer from "./components/IndexDrawer.vue";
+import { useDrawer } from "@/components/Drawer";
+
 import {
   list,
   deleteOne,
@@ -61,6 +71,9 @@ import { useUserStore } from "/@/store/modules/user";
 const queryParam = reactive<any>({});
 const checkedKeys = ref<Array<string | number>>([]);
 const userStore = useUserStore();
+// 注册drawer
+const [registerDrawer, { openDrawer }] = useDrawer();
+
 //注册model
 const [registerModal, { openModal }] = useModal();
 //注册table数据
@@ -107,6 +120,10 @@ const [registerTable, { reload }, { rowSelection, selectedRowKeys }] = tableCont
 // 高级查询配置
 const superQueryConfig = reactive(superQuerySchema);
 
+function handleAllDetail() {
+
+}
+
 /**
  * 高级查询事件
  */
@@ -121,7 +138,11 @@ function handleSuperQuery(params) {
  * 新增事件
  */
 function handleAdd() {
-  openModal(true, {
+  // openModal(true, {
+  //   isUpdate: false,
+  //   showFooter: true
+  // });
+  openDrawer(true, {
     isUpdate: false,
     showFooter: true
   });
@@ -131,7 +152,12 @@ function handleAdd() {
  * 编辑事件
  */
 function handleEdit(record: Recordable) {
-  openModal(true, {
+  // openModal(true, {
+  //   record,
+  //   isUpdate: true,
+  //   showFooter: true
+  // });
+  openDrawer(true, {
     record,
     isUpdate: true,
     showFooter: true
@@ -143,10 +169,18 @@ function handleEdit(record: Recordable) {
  */
 function handleAddWithParent(record: Recordable) {
 
-  openModal(true, {
-    record:{
-      parentId:record.id,
-      addType:1,
+  // openModal(true, {
+  //   record: {
+  //     parentId: record.id,
+  //     addType: 1
+  //   },
+  //   isUpdate: false,
+  //   showFooter: true
+  // });
+  openDrawer(true, {
+    record: {
+      parentId: record.id,
+      addType: 1
     },
     isUpdate: false,
     showFooter: true
@@ -157,7 +191,12 @@ function handleAddWithParent(record: Recordable) {
  * 详情
  */
 function handleDetail(record: Recordable) {
-  openModal(true, {
+  // openModal(true, {
+  //   record,
+  //   isUpdate: true,
+  //   showFooter: false
+  // });
+  openDrawer(true, {
     record,
     isUpdate: true,
     showFooter: false
