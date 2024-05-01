@@ -1,19 +1,12 @@
 import { BasicColumn } from "/@/components/Table";
-import { FormSchema } from "/@/components/Table";
+import { FormSchema, } from "/@/components/Table";
 import { rules } from "/@/utils/helper/validator";
 import { render } from "/@/utils/common/renderUtils";
 import { useNow } from "@vueuse/core";
-// 预览数据
-export const previewColums: BasicColumn[] = [
-  {
-    title: "一级指标",
-    align: "center",
-    dataIndex: "indexName",
-    customCell: (record, index, column) => {
-      console.log(record, index, column);
-    }
-  }
-];
+import {
+  getRootIndex, getIndexByRoot
+} from "@/views/nl_questionnaire_management/nl_questionnaire_list/NlQuestionnaireList.api";
+
 
 //列表数据
 export const columns: BasicColumn[] = [
@@ -81,18 +74,27 @@ export const searchFormSchema: FormSchema[] = [
   {
     label: "问卷类型",
     field: "questionnaireType",
-    component: "JTreeSelect",
-    // required: true,
+    component: "ApiSelect",
     componentProps: {
-      dict: "nl_questionnaire_index,index_name,id",
-      pidField: "parent_id"
+      api: getRootIndex,
+      numberToString: true,
+      labelField: "indexName",
+      valueField: "id"
     },
+    // component: "JTreeSelect",
+    // // required: true,
+    // componentProps: {
+    //   dict: "nl_questionnaire_index,index_name,id",
+    //   pidField: "parent_id"
+    // },
     colProps: {
       span: 8,
       offset: 2
     }
   }
 ];
+
+
 //表单数据
 export const formSchema: FormSchema[] = [
   // {
@@ -122,11 +124,48 @@ export const formSchema: FormSchema[] = [
   {
     label: "问卷类型",
     field: "questionnaireType",
-    component: "JTreeSelect",
     required: true,
-    componentProps: {
-      dict: "nl_questionnaire_index,index_name,id",
-      pidField: "parent_id"
+    // component: "JTreeSelect",
+    // componentProps: {
+    //   dict: "nl_questionnaire_index,index_name,id",
+    //   pidField: "parent_id"
+    // },
+    component: "ApiSelect",
+    componentProps: ({ formActionType, formModel }) => {
+      return {
+        api: getRootIndex,
+        numberToString: false,
+        labelField: "indexName",
+        valueField: "id",
+        // onChange:  () =>  {
+        //   const { updateSchema, getFieldsValue,clearValidate } = formActionType;
+        //   let fieldsValue = getFieldsValue();
+        //   console.log(fieldsValue);
+        //   const params = {
+        //     questionnaireType: fieldsValue.questionnaireType,
+        //   };
+        //   console.log(params);
+        //   let indexByRoot ;
+        //   getIndexByRoot(params).then((res)=>{
+        //     indexByRoot=res.data;
+        //     console.log(res.data)
+        //   });
+        //   console.log(indexByRoot);
+        //   clearValidate();
+        //   updateSchema([
+        //     {
+        //       field: "questionType",
+        //       component:'JTreeSelect',
+        //       componentProps: {
+        //         indexByRoot,
+        //       }
+        //     }
+        //   ]).then((res)=>{
+        //     console.log(res);
+        //
+        //   });
+        // }
+      };
     },
     colProps: {
       span: 8,
@@ -146,7 +185,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: "题目类型",
-    field: "quesitonType",
+    field: "questionType",
     component: "JTreeSelect",
     required: true,
     componentProps: {
@@ -160,8 +199,8 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: "题目数量",
-    field: "questionNum",
-    component: "JInput",
+    field: "singleNum",
+    component: "Input",
     required: true,
     colProps: {
       span: 8,
@@ -170,7 +209,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: "每题分数",
-    field: "eachQuestionScore",
+    field: "singleScore",
     component: "Input",
     required: true,
     colProps: {
@@ -200,6 +239,32 @@ export const formSchema: FormSchema[] = [
     },
     colProps: {
       span: 8,
+      offset: 2
+    }
+  },
+  {
+    label: "问卷开始时间",
+    field: "questionStartTime",
+    component: "DatePicker",
+    componentProps: {
+      showTime: true,
+      valueFormat: "YYYY-MM-DD HH:mm:ss"
+    },
+    colProps: {
+      span: 8,
+      offset: 4
+    }
+  },
+  {
+    label: "问卷结束时间",
+    field: "questionEndTime",
+    component: "DatePicker",
+    componentProps: {
+      showTime: true,
+      valueFormat: "YYYY-MM-DD HH:mm:ss"
+    },
+    colProps: {
+      span: 10,
       offset: 2
     }
   },

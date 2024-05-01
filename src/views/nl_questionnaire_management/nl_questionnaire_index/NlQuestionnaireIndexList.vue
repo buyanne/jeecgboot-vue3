@@ -4,9 +4,9 @@
     <BasicTable @register="registerTable" :rowSelection="rowSelection">
       <!--插槽:table标题-->
       <template #tableTitle>
-        <a-button type="primary" @click="handleAllDetail">
-          预览
-        </a-button>
+<!--        <a-button type="primary" @click="handlePreview">-->
+<!--          预览-->
+<!--        </a-button>-->
         <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined">
           新增问卷指标
         </a-button>
@@ -40,7 +40,10 @@
     <!-- 表单区域 -->
     <NlQuestionnaireIndexModal @register="registerModal"
                                @success="handleSuccess"></NlQuestionnaireIndexModal>
+    <!--    抽屉-->
     <IndexDrawer @register="registerDrawer" @success="handleSuccess"></IndexDrawer>
+    <PreviewTable></PreviewTable>
+
   </div>
 </template>
 
@@ -51,12 +54,14 @@ import { useModal } from "/@/components/Modal";
 import { useListPage } from "/@/hooks/system/useListPage";
 import NlQuestionnaireIndexModal from "./components/NlQuestionnaireIndexModal.vue";
 import { columns, searchFormSchema, superQuerySchema } from "./NlQuestionnaireIndex.data";
-
 /*
 * 添加抽屉
 * */
 import IndexDrawer from "./components/IndexDrawer.vue";
 import { useDrawer } from "@/components/Drawer";
+
+// 添加预览
+import PreviewTable from "./components/PreviewTable.vue";
 
 import {
   list,
@@ -65,8 +70,8 @@ import {
   getImportUrl,
   getExportUrl
 } from "./NlQuestionnaireIndex.api";
-import { downloadFile } from "/@/utils/common/renderUtils";
 import { useUserStore } from "/@/store/modules/user";
+
 
 const queryParam = reactive<any>({});
 const checkedKeys = ref<Array<string | number>>([]);
@@ -120,8 +125,11 @@ const [registerTable, { reload }, { rowSelection, selectedRowKeys }] = tableCont
 // 高级查询配置
 const superQueryConfig = reactive(superQuerySchema);
 
-function handleAllDetail() {
-
+// 处理预览
+function handlePreview() {
+  var anchor = document.getElementById("anchor");
+  console.log("nihao ")
+  anchor.scrollIntoView({ behavior: "smooth" });
 }
 
 /**

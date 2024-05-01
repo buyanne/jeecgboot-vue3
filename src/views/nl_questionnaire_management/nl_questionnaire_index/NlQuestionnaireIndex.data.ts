@@ -1,11 +1,25 @@
 
 import { BasicColumn } from "/@/components/Table";
 import { FormSchema } from "/@/components/Table";
-import { rules } from "/@/utils/helper/validator";
 import { render } from "/@/utils/common/renderUtils";
-import {
-  getIndexTree
-} from "@/views/nl_questionnaire_management/nl_questionnaire_index/NlQuestionnaireIndex.api";
+
+// 预览数据
+export const previewColumns:BasicColumn[]=[
+  {
+    title:'一级节点',
+
+  },
+  {
+    title:'二级节点',
+
+  },
+  {
+    title:'三级节点',
+
+  },
+
+]
+
 //列表数据
 export const columns: BasicColumn[] = [
   {
