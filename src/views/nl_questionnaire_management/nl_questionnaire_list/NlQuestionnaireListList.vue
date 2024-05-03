@@ -178,6 +178,10 @@ function getTableAction(record) {
   ];
 }
 
+function handlePreview(preview) {
+  openModal();
+}
+
 /**
  * 下拉操作栏
  */
@@ -186,7 +190,12 @@ function getDropDownAction(record) {
     {
       label: "详情",
       onClick: handleDetail.bind(null, record)
-    }, {
+    },
+    {
+      label: "预览题目",
+      onClick: handlePreview.bind(null, record.preview)
+    },
+    {
       label: "删除",
       popConfirm: {
         title: "是否确认删除",

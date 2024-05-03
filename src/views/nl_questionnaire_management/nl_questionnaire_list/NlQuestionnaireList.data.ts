@@ -1,8 +1,5 @@
 import { BasicColumn } from "/@/components/Table";
-import { FormSchema, } from "/@/components/Table";
-import { rules } from "/@/utils/helper/validator";
-import { render } from "/@/utils/common/renderUtils";
-import { useNow } from "@vueuse/core";
+import { FormSchema } from "/@/components/Table";
 import {
   getRootIndex, getIndexByRoot
 } from "@/views/nl_questionnaire_management/nl_questionnaire_list/NlQuestionnaireList.api";
@@ -13,16 +10,7 @@ export const columns: BasicColumn[] = [
   {
     title: "测评计划",
     align: "center",
-    dataIndex: "planName",
-    customCell: (record, index, column) => {
-      // console.log(column)
-      // if (index == 0) {
-      //   return { rowSpan: 3 };
-      // } else {
-      //   return { rowSpan: 0 };
-      // }
-      // console.log(record.id)
-    }
+    dataIndex: "planName"
   },
   {
     title: "问卷类型",
@@ -125,46 +113,34 @@ export const formSchema: FormSchema[] = [
     label: "问卷类型",
     field: "questionnaireType",
     required: true,
-    // component: "JTreeSelect",
-    // componentProps: {
-    //   dict: "nl_questionnaire_index,index_name,id",
-    //   pidField: "parent_id"
-    // },
     component: "ApiSelect",
-    componentProps: ({ formActionType, formModel }) => {
+    componentProps: ({ formActionType }) => {
       return {
         api: getRootIndex,
         numberToString: false,
         labelField: "indexName",
         valueField: "id",
-        // onChange:  () =>  {
-        //   const { updateSchema, getFieldsValue,clearValidate } = formActionType;
-        //   let fieldsValue = getFieldsValue();
-        //   console.log(fieldsValue);
-        //   const params = {
-        //     questionnaireType: fieldsValue.questionnaireType,
-        //   };
-        //   console.log(params);
-        //   let indexByRoot ;
-        //   getIndexByRoot(params).then((res)=>{
-        //     indexByRoot=res.data;
-        //     console.log(res.data)
-        //   });
-        //   console.log(indexByRoot);
-        //   clearValidate();
-        //   updateSchema([
-        //     {
-        //       field: "questionType",
-        //       component:'JTreeSelect',
-        //       componentProps: {
-        //         indexByRoot,
-        //       }
-        //     }
-        //   ]).then((res)=>{
-        //     console.log(res);
-        //
-        //   });
-        // }
+        onSelect: async (option) => {
+          const { clearValidate, updateSchema, setFieldsValue } = formActionType;
+          // console.log(option, value);
+          const treeData = await getIndexByRoot({ questionnaireType: option });
+          // console.log(treeData);
+          setFieldsValue({ questionType: null });
+          updateSchema([
+            {
+              field: "questionType",
+              // valueField: "",
+              componentProps: {
+                treeData
+              }
+
+            }
+
+          ]);
+
+          clearValidate();
+
+        }
       };
     },
     colProps: {
@@ -186,11 +162,14 @@ export const formSchema: FormSchema[] = [
   {
     label: "题目类型",
     field: "questionType",
-    component: "JTreeSelect",
+    component: "TreeSelect",
     required: true,
     componentProps: {
-      dict: "nl_questionnaire_index,index_name,id",
-      pidField: "parent_id"
+      fieldNames: {
+        label: "indexName",
+        key: "id",
+        value: "id"
+      }
     },
     colProps: {
       span: 8,
@@ -205,6 +184,21 @@ export const formSchema: FormSchema[] = [
     colProps: {
       span: 8,
       offset: 4
+    },
+    componentProps: ({ formActionType }) => {
+      return {
+        onChange: (singleNum) => {
+          const { getFieldsValue, setFieldsValue } = formActionType;
+          // console.log(singleNum.target.value);
+          let fieldsValue = getFieldsValue();
+          let singleScore = fieldsValue.singleScore;
+          // console.log(fieldsValue.singleScore, fieldsValue.singleNum);
+          if (singleScore == undefined || singleScore == "") {
+            return;
+          }
+          setFieldsValue({ "totalScore": singleNum.target.value * singleScore });
+        }
+      };
     }
   },
   {
@@ -215,6 +209,19 @@ export const formSchema: FormSchema[] = [
     colProps: {
       span: 8,
       offset: 2
+    },
+    componentProps: ({ formActionType }) => {
+      return {
+        onChange: (singleScore) => {
+          const { getFieldsValue, setFieldsValue } = formActionType;
+          let fieldsValue = getFieldsValue();
+          let singleNum = fieldsValue.singleNum;
+          if ((singleScore.target.value!=undefined||singleScore.target.value!="")&&(singleNum == undefined || singleNum == "")) {
+            return;
+          }
+          setFieldsValue({ "totalScore": singleScore.target.value * fieldsValue.singleNum });
+        }
+      };
     }
   },
   {
@@ -226,6 +233,7 @@ export const formSchema: FormSchema[] = [
       span: 8,
       offset: 4
     },
+    dynamicDisabled: false,
     required: true
   },
   {
@@ -251,8 +259,8 @@ export const formSchema: FormSchema[] = [
       valueFormat: "YYYY-MM-DD HH:mm:ss"
     },
     colProps: {
-      span: 8,
-      offset: 4
+      span: 11,
+      offset: 2
     }
   },
   {
@@ -264,8 +272,8 @@ export const formSchema: FormSchema[] = [
       valueFormat: "YYYY-MM-DD HH:mm:ss"
     },
     colProps: {
-      span: 10,
-      offset: 2
+      span: 11,
+      offset: 0
     }
   },
   // {

@@ -33,7 +33,7 @@ export const searchFormSchema: FormSchema[] = [
     componentProps: {
       dict: "nl_questionnaire_index,index_name,id",
       pidField: "parent_id"
-    },
+    }
     // labelWidth:200,
   },
   {
@@ -73,7 +73,8 @@ export const formSchema: FormSchema[] = [
   {
     label: "问题描述",
     field: "questionName",
-    component: "Input",
+    component: "InputTextArea",
+    componentProps: {},
     dynamicRules: ({ model, schema }) => {
       return [
         { required: true, message: "请输入问题描述!" }
@@ -84,10 +85,8 @@ export const formSchema: FormSchema[] = [
     label: "选项信息",
     field: "choiceList",
 
-    component: "JAddInput",
-    componentProps:{
-      
-    },
+    component: "AddQuestion",
+    componentProps: {}
   },
   {
     label: "目前状态",

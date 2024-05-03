@@ -47,22 +47,23 @@ const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data
       ...data.record
     });
   }
-  // let fieldsValue = getFieldsValue();
-  // let questionnaireType = fieldsValue.questionnaireType;
-  // if (questionnaireType != undefined) {
-  //   const params = {
-  //     questionnaireType: questionnaireType
-  //   };
-  //   const treeData = await getIndexByRoot(params);
-  //   console.log(treeData);
-  //   updateSchema([
-  //     {
-  //       field: "questionType",
-  //       componentProps: {
-  //         treeData
-  //       }
-  //     }
-  //   ]);
+  let fieldsValue = getFieldsValue();
+  let questionnaireType = fieldsValue.questionnaireType;
+  if (questionnaireType != undefined) {
+    const params = {
+      questionnaireType: questionnaireType
+    };
+    const treeData = await getIndexByRoot(params);
+    console.log(treeData);
+    updateSchema([
+      {
+        field: "questionType",
+        componentProps: {
+          treeData
+        }
+      }
+    ]);
+  }
   // } else {
   //   updateSchema([
   //     {

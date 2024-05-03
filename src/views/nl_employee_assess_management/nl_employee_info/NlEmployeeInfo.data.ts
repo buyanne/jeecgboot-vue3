@@ -129,7 +129,7 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '姓名',
-    field: 'name',
+    field: 'realname',
     component: 'Input',
     dynamicDisabled: ({}) => {
       return true;
@@ -158,7 +158,7 @@ export const formSchema: FormSchema[] = [
   {
     label: '籍贯',
     field: 'ancestral',
-    component: 'Input',
+    component: 'JAreaSelect',
   },
   {
     label: '民族',
@@ -252,26 +252,26 @@ export const formSchema: FormSchema[] = [
   },
   {
     label: '船员服务簿',
-    field: 'recordBookFileid',
+    field: 'recordBookField',
     component: 'Input',
   },
-  {
-    label: '处理状态',
-    field: 'handleState',
-    component: 'JDictSelectTag',
-    componentProps: {
-      dictCode: 'handle_state',
-      placeholder: '请选择处理状态',
-      stringToNumber: true,
-    },
-    dynamicDisabled: true,
-  },
-  {
-    label: '处理意见',
-    field: 'handleOpinions',
-    component: 'InputTextArea',
-    dynamicDisabled: true,
-  },
+  // {
+  //   label: '处理状态',
+  //   field: 'handleState',
+  //   component: 'JDictSelectTag',
+  //   componentProps: {
+  //     dictCode: 'handle_state',
+  //     placeholder: '请选择处理状态',
+  //     stringToNumber: true,
+  //   },
+  //   dynamicDisabled: false,
+  // },
+  // {
+  //   label: '处理意见',
+  //   field: 'handleOpinions',
+  //   component: 'InputTextArea',
+  //   dynamicDisabled: true,
+  // },
   // TODO 主键隐藏字段，目前写死为ID
   {
     label: '',

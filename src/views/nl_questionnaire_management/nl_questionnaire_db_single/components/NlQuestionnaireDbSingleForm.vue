@@ -1,5 +1,6 @@
 <template>
     <div style="min-height: 400px">
+      <JAddInput></JAddInput>
         <BasicForm @register="registerForm"></BasicForm>
         <div style="width: 100%;text-align: center" v-if="!formDisabled">
             <a-button @click="submitForm" pre-icon="ant-design:check" type="primary">提 交</a-button>
@@ -14,10 +15,12 @@
     import { propTypes } from '/@/utils/propTypes';
     import {getBpmFormSchema} from '../NlQuestionnaireDbSingle.data';
     import {saveOrUpdate} from '../NlQuestionnaireDbSingle.api';
+    import JAddInput from "@/components/Form/src/jeecg/components/JAddInput.vue";
     
     export default defineComponent({
         name: "NlQuestionnaireDbSingleForm",
         components:{
+          JAddInput,
             BasicForm
         },
         props:{

@@ -1,12 +1,17 @@
 <template>
   <div>
+    <a-button style="font-size:15px" v-if="unref(isPreview)" type="primary" @click="handleBack">
+      ← 返回指标管理
+    </a-button>
     <!--引用表格-->
-    <BasicTable @register="registerTable" :rowSelection="rowSelection">
+    <BasicTable v-if="!unref(isPreview)" @register="registerTable" :rowSelection="rowSelection">
       <!--插槽:table标题-->
       <template #tableTitle>
-<!--        <a-button type="primary" @click="handlePreview">-->
-<!--          预览-->
-<!--        </a-button>-->
+        <a-button v-if="!unref(isPreview)" type="primary" @click="handlePreview">
+          预览
+        </a-button>
+
+
         <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined">
           新增问卷指标
         </a-button>
@@ -36,13 +41,16 @@
       <!--字段回显插槽-->
       <template v-slot:bodyCell="{ column, record, index, text }">
       </template>
+
     </BasicTable>
     <!-- 表单区域 -->
     <NlQuestionnaireIndexModal @register="registerModal"
                                @success="handleSuccess"></NlQuestionnaireIndexModal>
     <!--    抽屉-->
     <IndexDrawer @register="registerDrawer" @success="handleSuccess"></IndexDrawer>
-    <PreviewTable></PreviewTable>
+    <PreviewTable v-if="unref(isPreview)">
+
+    </PreviewTable>
 
   </div>
 </template>
@@ -71,6 +79,7 @@ import {
   getExportUrl
 } from "./NlQuestionnaireIndex.api";
 import { useUserStore } from "/@/store/modules/user";
+import JAddInput from "@/components/Form/src/jeecg/components/JAddInput.vue";
 
 
 const queryParam = reactive<any>({});
@@ -119,6 +128,7 @@ const { prefixCls, tableContext, onExportXls, onImportXls } = useListPage({
     success: handleSuccess
   }
 });
+let isPreview = ref(false);
 
 const [registerTable, { reload }, { rowSelection, selectedRowKeys }] = tableContext;
 
@@ -127,9 +137,14 @@ const superQueryConfig = reactive(superQuerySchema);
 
 // 处理预览
 function handlePreview() {
-  var anchor = document.getElementById("anchor");
-  console.log("nihao ")
-  anchor.scrollIntoView({ behavior: "smooth" });
+  console.log(unref(isPreview.value));
+  isPreview.value = !isPreview.value;
+  console.log(isPreview.value);
+}
+
+function handleBack() {
+  // console.log(unref(isPreview));
+  isPreview.value = !isPreview.value;
 }
 
 /**

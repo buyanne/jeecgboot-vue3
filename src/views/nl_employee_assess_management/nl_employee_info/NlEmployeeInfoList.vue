@@ -1,39 +1,6 @@
 <template>
   <div>
-    <!--引用表格-->
-    <!--   <BasicTable @register="registerTable" :rowSelection="rowSelection">-->
-    <!--     &lt;!&ndash;插槽:table标题&ndash;&gt;-->
-    <!--      <template #tableTitle>-->
-    <!--          <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增</a-button>-->
-    <!--          <a-button  type="primary" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出</a-button>-->
-    <!--          <j-upload-button  type="primary" preIcon="ant-design:import-outlined" @click="onImportXls">导入</j-upload-button>-->
-    <!--          <a-dropdown v-if="selectedRowKeys.length > 0">-->
-    <!--              <template #overlay>-->
-    <!--                <a-menu>-->
-    <!--                  <a-menu-item key="1" @click="batchHandleDelete">-->
-    <!--                    <Icon icon="ant-design:delete-outlined"></Icon>-->
-    <!--                    删除-->
-    <!--                  </a-menu-item>-->
-    <!--                </a-menu>-->
-    <!--              </template>-->
-    <!--              <a-button>批量操作-->
-    <!--                <Icon icon="mdi:chevron-down"></Icon>-->
-    <!--              </a-button>-->
-    <!--        </a-dropdown>-->
-    <!--        &lt;!&ndash; 高级查询 &ndash;&gt;-->
-    <!--        <super-query :config="superQueryConfig" @search="handleSuperQuery" />-->
-    <!--      </template>-->
-    <!--       &lt;!&ndash;操作栏&ndash;&gt;-->
-    <!--      <template #action="{ record }">-->
-    <!--        <TableAction :actions="getTableAction(record)" :dropDownActions="getDropDownAction(record)"/>-->
-    <!--      </template>-->
-    <!--      &lt;!&ndash;字段回显插槽&ndash;&gt;-->
-    <!--      <template v-slot:bodyCell="{ column, record, index, text }">-->
-    <!--      </template>-->
-    <!--    </BasicTable>-->
-    <!-- 表单区域 -->
-<!--    <NlEmployeeInfoModal @register="registerModal" @success="handleSuccess" />-->
-    <NlEmployeeInfoForm />
+       <NlEmployeeInfoForm />
   </div>
 </template>
 

@@ -11,7 +11,7 @@ export const columns: BasicColumn[] = [
   {
     title: '姓名',
     align: 'center',
-    dataIndex: 'name',
+    dataIndex: 'realname',
   },
   {
     title: '审核状态',
@@ -30,7 +30,7 @@ export const columns: BasicColumn[] = [
 export const searchFormSchema: FormSchema[] = [
   {
     label: '姓名',
-    field: 'name',
+    field: 'realname',
     component: 'Input',
   },
   {
@@ -64,10 +64,11 @@ export const formSchema: FormSchema[] = [
       return [{ required: true, message: '请输入审核信息的id!' }];
     },
     dynamicDisabled: true,
+    show:false,
   },
   {
     label: '姓名',
-    field: 'name',
+    field: 'realname',
     component: 'Input',
     dynamicDisabled: true,
   },
