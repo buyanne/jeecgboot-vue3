@@ -1,17 +1,17 @@
-import { defHttp } from '/@/utils/http/axios';
-import { useMessage } from '/@/hooks/web/useMessage';
+import { defHttp } from "/@/utils/http/axios";
+import { useMessage } from "/@/hooks/web/useMessage";
 
 const { createConfirm } = useMessage();
 
 enum Api {
-  list = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/list',
-  listWithName = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/listWithName',
-  save = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/add',
-  edit = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/edit',
-  deleteOne = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/delete',
-  deleteBatch = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/deleteBatch',
-  importExcel = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/importExcel',
-  exportXls = '/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/exportXls',
+  list = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/list",
+  listWithName = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/listWithName",
+  save = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/add",
+  edit = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/edit",
+  deleteOne = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/delete",
+  deleteBatch = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/deleteBatch",
+  importExcel = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/importExcel",
+  exportXls = "/nl_employee_assess_management/nl_employee_interview_info/nlEmployeeIntviewInfo/exportXls",
 }
 
 /**
@@ -45,24 +45,24 @@ export const deleteOne = (params, handleSuccess) => {
  */
 export const batchDelete = (params, handleSuccess) => {
   createConfirm({
-    iconType: 'warning',
-    title: '确认删除',
-    content: '是否删除选中数据',
-    okText: '确认',
-    cancelText: '取消',
+    iconType: "warning",
+    title: "确认删除",
+    content: "是否删除选中数据",
+    okText: "确认",
+    cancelText: "取消",
     onOk: () => {
       return defHttp
         .delete(
           {
             url: Api.deleteBatch,
-            data: params,
+            data: params
           },
           { joinParamsToUrl: true }
         )
         .then(() => {
           handleSuccess();
         });
-    },
+    }
   });
 };
 /**

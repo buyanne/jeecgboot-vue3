@@ -1,16 +1,11 @@
 <template>
-  <div>
+  <div style="background-color: white">
     <!--引用表格-->
-    <BasicTable @register="registerTable" :rowSelection="rowSelection">
+    <BasicTable v-if="unref(showTable)" @register="registerTable" :rowSelection="rowSelection">
       <!--插槽:table标题-->
       <template #tableTitle>
         <a-button type="primary" @click="handleAdd" preIcon="ant-design:plus-outlined"> 新增
         </a-button>
-        <a-button type="primary" preIcon="ant-design:export-outlined" @click="onExportXls"> 导出
-        </a-button>
-        <j-upload-button type="primary" preIcon="ant-design:import-outlined" @click="onImportXls">
-          导入
-        </j-upload-button>
         <a-dropdown v-if="selectedRowKeys.length > 0">
           <template #overlay>
             <a-menu>
@@ -39,6 +34,11 @@
     <!-- 表单区域 -->
     <NlQuestionnaireListModal @register="registerModal"
                               @success="handleSuccess"></NlQuestionnaireListModal>
+    <a-button v-if="!unref(showTable)" @click="handleBack"> 返 回</a-button>
+    <QuestionListPreviewForm
+      :listId="listId"
+      :isPreview="true"
+      v-if="!unref(showTable)"></QuestionListPreviewForm>
   </div>
 </template>
 
@@ -58,6 +58,12 @@ import {
 } from "./NlQuestionnaireList.api";
 import { downloadFile } from "/@/utils/common/renderUtils";
 import { useUserStore } from "/@/store/modules/user";
+import QuestionListPreviewForm
+  from "@/views/nl_questionnaire_management/nl_questionnaire_list/components/QuestionListPreviewForm.vue";
+
+const showTable = ref(true);
+
+const listId = ref({});
 
 const queryParam = reactive<any>({});
 const checkedKeys = ref<Array<string | number>>([]);
@@ -178,8 +184,14 @@ function getTableAction(record) {
   ];
 }
 
-function handlePreview(preview) {
-  openModal();
+function handlePreview(record) {
+  listId.value = record.id;
+  // console.log(listId.value);
+  showTable.value = !showTable.value;
+}
+
+function handleBack() {
+  showTable.value = !showTable.value;
 }
 
 /**
@@ -193,7 +205,7 @@ function getDropDownAction(record) {
     },
     {
       label: "预览题目",
-      onClick: handlePreview.bind(null, record.preview)
+      onClick: handlePreview.bind(null, record)
     },
     {
       label: "删除",

@@ -23,8 +23,8 @@ import { propTypes } from '/@/utils/propTypes';
 import { isEmpty } from '/@/utils/is';
 import { tryOnMounted, tryOnUnmounted } from '@vueuse/core';
 interface Params {
-  label: string;
-  value: string;
+  label: number;
+  value: number;
 }
 
 export default defineComponent({

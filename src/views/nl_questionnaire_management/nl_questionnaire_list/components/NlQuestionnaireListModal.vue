@@ -38,7 +38,7 @@ const [registerModal, { setModalProps, closeModal }] = useModalInner(async (data
   setModalProps({
     confirmLoading: false,
     showCancelBtn: !!data?.showFooter,
-    showOkBtn: !!data?.showFooter
+    showOkBtn: !!data?.showFooter,
   });
   isUpdate.value = !!data?.isUpdate;
   if (unref(isUpdate)) {

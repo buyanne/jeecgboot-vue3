@@ -82,6 +82,25 @@ export const searchFormSchema: FormSchema[] = [
   }
 ];
 
+export const questionListSchema: FormSchema[] = [
+  {
+    label: "题目",
+    field: "questionName",
+    component: "JInput"
+  },
+  {
+    label:'选项',
+    field:'choiceList',
+    component:'JCheckbox'
+  },
+  // TODO 主键隐藏字段，目前写死为ID
+  {
+    label: "",
+    field: "id",
+    component: "Input",
+    show: false
+  }
+];
 
 //表单数据
 export const formSchema: FormSchema[] = [
@@ -216,7 +235,7 @@ export const formSchema: FormSchema[] = [
           const { getFieldsValue, setFieldsValue } = formActionType;
           let fieldsValue = getFieldsValue();
           let singleNum = fieldsValue.singleNum;
-          if ((singleScore.target.value!=undefined||singleScore.target.value!="")&&(singleNum == undefined || singleNum == "")) {
+          if ((singleScore.target.value != undefined || singleScore.target.value != "") && (singleNum == undefined || singleNum == "")) {
             return;
           }
           setFieldsValue({ "totalScore": singleScore.target.value * fieldsValue.singleNum });
@@ -319,4 +338,8 @@ export const superQuerySchema = {
 export function getBpmFormSchema(_formData): FormSchema[] {
   // 默认和原始表单保持一致 如果流程中配置了权限数据，这里需要单独处理formSchema
   return formSchema;
+}
+
+export function getQuestionListSchema(_formData): FormSchema[] {
+  return questionListSchema;
 }

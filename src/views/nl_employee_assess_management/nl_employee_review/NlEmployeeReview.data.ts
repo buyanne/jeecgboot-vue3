@@ -72,16 +72,16 @@ export const formSchema: FormSchema[] = [
     component: 'Input',
     dynamicDisabled: true,
   },
-  {
-    label: '审核状态',
-    field: 'reviewResult',
-    component: 'JDictSelectTag',
-    componentProps: {
-      dictCode: 'review_result',
-      placeholder: '请选择审核结论',
-      stringToNumber: true,
-    },
-  },
+  // {
+  //   label: '审核状态',
+  //   field: 'reviewResult',
+  //   component: 'JDictSelectTag',
+  //   componentProps: {
+  //     dictCode: 'review_result',
+  //     placeholder: '请选择审核结论',
+  //     stringToNumber: true,
+  //   },
+  // },
   {
     label: '审核说明',
     field: 'reviewMsg',

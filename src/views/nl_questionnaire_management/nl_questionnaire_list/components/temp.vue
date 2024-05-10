@@ -2,7 +2,8 @@
   <div style="min-height: 400px">
     <BasicForm @register="registerForm"></BasicForm>
     <div style="width: 100%;text-align: center" v-if="!formDisabled">
-      <a-button @click="submitForm" pre-icon="ant-design:check" type="primary">提 交</a-button>
+      <a-button @click="submitForm" pre-icon="ant-design:LeftOutlined" type="primary">关 闭
+      </a-button>
     </div>
   </div>
 </template>
@@ -12,23 +13,23 @@ import { BasicForm, useForm } from "/@/components/Form/index";
 import { computed, defineComponent } from "vue";
 import { defHttp } from "/@/utils/http/axios";
 import { propTypes } from "/@/utils/propTypes";
-import { getBpmFormSchema } from "../NlQuestionnaireList.data";
-import { saveOrUpdate } from "../NlQuestionnaireList.api";
+import { getBpmFormSchema, getQuestionListSchema } from "../NlQuestionnaireList.data";
 
 export default defineComponent({
-  name: "NlQuestionnaireListForm",
+  name: "QuestionListPreviewForm",
   components: {
     BasicForm
   },
   props: {
     formData: propTypes.object.def({}),
-    formBpm: propTypes.bool.def(true)
+    formBpm: propTypes.bool.def(true),
+    listId: Number
   },
   setup(props) {
     const [registerForm, { setFieldsValue, setProps, getFieldsValue }] = useForm({
       labelWidth: 150,
-      schemas: getBpmFormSchema(props.formData),
-      showActionButtonGroup: false,
+      schemas: getQuestionListSchema(props.formData),
+      showActionButtonGroup: false
       // baseColProps: {
       //   span: 10
       // },
@@ -46,24 +47,27 @@ export default defineComponent({
     });
 
     let formData = {};
-    const queryByIdUrl = "/nl_questionnaire_list/nlQuestionnaireList/queryById";
+    const queryByIdUrl = "/nl_questionnaire_list/nlQuestionnaireList/queryQuestionListByListId";
 
     async function initFormData() {
-      let params = { id: props.formData.dataId };
+      // console.log(props.listId);
+
+      let params = { id: props.listId };
+      // console.log(params);
       const data = await defHttp.get({ url: queryByIdUrl, params });
-      formData = { ...data };
-      console.log(formData);
+      // console.log(data);
+      let t=data[0];
+      // console.log(t);
+      formData = { ...t };
+      // console.log(formData);
       //设置表单的值
       await setFieldsValue(formData);
       //默认是禁用
-      await setProps({ disabled: formDisabled.value });
+      // await setProps({ disabled: formDisabled.value });
     }
 
     async function submitForm() {
-      let data = getFieldsValue();
-      let params = Object.assign({}, formData, data);
-      console.log("表单数据", params);
-      await saveOrUpdate(params, true);
+      console.log("nihao");
     }
 
     initFormData();

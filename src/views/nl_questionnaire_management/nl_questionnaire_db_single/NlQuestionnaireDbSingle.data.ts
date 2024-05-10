@@ -2,6 +2,7 @@ import { BasicColumn } from "/@/components/Table";
 import { FormSchema } from "/@/components/Table";
 import { rules } from "/@/utils/helper/validator";
 import { render } from "/@/utils/common/renderUtils";
+import { number } from "vue-types";
 //列表数据
 export const columns: BasicColumn[] = [
   {
@@ -61,7 +62,7 @@ export const formSchema: FormSchema[] = [
     componentProps: {
       width: 19,
       dict: "nl_questionnaire_index,index_name,id",
-      pidField: "parent_id"
+      pidField: "parent_id",
     },
     dynamicRules: ({ model, schema }) => {
       return [{
