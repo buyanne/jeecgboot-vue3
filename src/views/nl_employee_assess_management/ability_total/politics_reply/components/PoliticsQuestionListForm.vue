@@ -1,7 +1,6 @@
 <template>
   <div class="container">
-
-    <div class="content-wrapper">
+    <div v-show="!isSubmitted" class="content-wrapper">
       <div class="question-list-wrapper">
         <div class="question-list">
           <h2>题目列表</h2>
@@ -51,17 +50,19 @@
         </a-form>
       </div>
     </div>
+    <!-- 如果已提交，显示感谢信息或其他内容 -->
+    <div v-show="isSubmitted" class="centered-content">
+      <h2>您已成功提交问卷，感谢您的参与！</h2>
+      <!-- 可以添加一些导航链接或其他内容 -->
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { BasicForm } from "/@/components/Form/index";
-import { defineComponent, reactive, ref, UnwrapRef } from "vue";
+import { defineComponent, onMounted, reactive, ref, unref, UnwrapRef } from "vue";
 import { defHttp } from "/@/utils/http/axios";
 import { propTypes } from "/@/utils/propTypes";
-
-
-let showForm = ref(false);
 
 // 定义选项
 interface Choice {
@@ -81,6 +82,7 @@ interface Question {
 
 export default defineComponent({
   name: "PoliticsQuestionListForm",
+  methods: { unref },
   components: {
     BasicForm
   },
@@ -88,14 +90,15 @@ export default defineComponent({
     formData: propTypes.object.def({}),
     formBpm: propTypes.bool.def(true),
     listId: Number,
-    isPreview: Boolean
+    isPreview: Boolean,
+    isShowQuestion: Boolean
   },
   setup: function(props) {
     // 动态数据
     const questionList: UnwrapRef<{ params: Question[] }> = reactive({ params: [] });
     // 问卷
     const quesionnaireData = ref({});
-
+    const isShowQuestion = ref(false);
     //新增问题
     const add = (item) => {
       questionList.params.push({
@@ -111,41 +114,65 @@ export default defineComponent({
     const queryQuestionList = "/nl_politics_reply" +
       "/nlEmployeePoliticsRequestReply" +
       "/queryQuestionList";
+    const saveReply = "/nl_politics_reply" +
+      "/nlEmployeePoliticsRequestReply/saveReply";
+
+    const isSubmitted = ref(false);
 
     async function initFormData() {
       let params = { id: -1 };
-      const questionnaireList = await defHttp.get({ url: queryQuestionnaire, params });
-      // console.log(questionnaireList);
-
+      let questionnaireList = await defHttp.get({ url: queryQuestionnaire, params });
       quesionnaireData.value = questionnaireList;
-
+      console.log(questionnaireList);
+      // if(questionnaireList==null){
+      //   isSubmitted.value=true;
+      // }
       const data = await defHttp.get({ url: queryQuestionList, params });
-      // console.log(data);
       data.forEach(add);
-      console.log(questionList);
+      console.log(data);
     }
 
+
     async function submitForm() {
-      const result = {
+      const params = {
         listId: quesionnaireData.value.id,
         questionList: questionList.params.map((question) => ({
-          qustionId: question.id,
+          questionId: question.id,
           selectedChoice: question.selectedChoice
         }))
       };
       let cnt = 0;
-      for (let i = 0; i < result.questionList.length; i++) {
-        console.log(result.questionList[i].selectedChoice);
-        if (result.questionList[i].selectedChoice == undefined) {
+      for (let i = 0; i < params.questionList.length; i++) {
+        console.log(params.questionList[i].selectedChoice);
+        if (params.questionList[i].selectedChoice == undefined) {
           cnt++;
         }
       }
-      console.log(cnt);
+      // console.log(cnt);
       if (cnt != 0) {
         alert("请全部选择后提交");
       }
-      console.log(result);
+      // todo 需要写后端的接口
+      console.log(params);
+      await defHttp.post({ url: saveReply, params });
+      isSubmitted.value = true;
     }
+
+    async function checkIsSubmitted() {
+      let params = { id: -1 };
+      let questionnaireList = await defHttp.get({ url: queryQuestionnaire, params });
+      if (questionnaireList == null) {
+        isSubmitted.value = true;
+        // quesionnaireData.value = questionnaireList;
+        // const data = await defHttp.get({ url: queryQuestionList, params });
+        // data.forEach(add);
+      } else {
+        isSubmitted.value = false;
+      }
+      console.log(isSubmitted.value);
+    }
+
+    onMounted(checkIsSubmitted);
 
     function getChoiceLabel(index: number) {
       return String.fromCharCode(65 + index); // A, B, C, D, etc.
@@ -159,6 +186,7 @@ export default defineComponent({
       questionList,
       quesionnaireData,
       add,
+      isSubmitted,
       getChoiceLabel
     };
   }
@@ -166,6 +194,14 @@ export default defineComponent({
 ;
 </script>
 <style scoped>
+
+.centered-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* 使用视口高度来居中垂直方向 */
+  text-align: center; /* 确保文本也居中 */
+}
 
 .content-wrapper {
   display: flex;

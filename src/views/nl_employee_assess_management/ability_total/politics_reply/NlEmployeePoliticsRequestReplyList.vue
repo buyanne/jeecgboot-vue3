@@ -14,8 +14,6 @@ import { ref, reactive, computed, unref } from "vue";
 import { BasicTable, useTable, TableAction } from "/@/components/Table";
 import { useModal } from "/@/components/Modal";
 import { useListPage } from "/@/hooks/system/useListPage";
-import NlEmployeePoliticsRequestReplyModal
-  from "./components/NlEmployeePoliticsRequestReplyModal.vue";
 import PoliticsQuestionListForm from "./components/PoliticsQuestionListForm.vue";
 import { columns, searchFormSchema, superQuerySchema } from "./NlEmployeePoliticsRequestReply.data";
 import {
