@@ -3,6 +3,7 @@
     <PoliticsQuestionListForm
       :listId="listId"
       :isPreview="isPreview"
+      style="background-color: white"
     >
 
     </PoliticsQuestionListForm>

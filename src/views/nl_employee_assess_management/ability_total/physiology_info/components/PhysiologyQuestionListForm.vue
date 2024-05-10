@@ -1,5 +1,5 @@
 <template>
-  <div   class="container">
+  <div class="container" >
     <div v-show="!isSubmitted" class="content-wrapper">
       <div class="question-list-wrapper">
         <div class="question-list">
@@ -81,7 +81,7 @@ interface Question {
 }
 
 export default defineComponent({
-  name: "PoliticsQuestionListForm",
+  name: "PhysiologyQuestionListForm",
   methods: { unref },
   components: {
     BasicForm
@@ -108,14 +108,9 @@ export default defineComponent({
         // selectChoice: '0'
       });
     };
-    const queryQuestionnaire = "/nl_politics_reply" +
-      "/nlEmployeePoliticsRequestReply" +
-      "/queryPoliticsQuestionnaire";
-    const queryQuestionList = "/nl_politics_reply" +
-      "/nlEmployeePoliticsRequestReply" +
-      "/queryQuestionList";
-    const saveReply = "/nl_politics_reply" +
-      "/nlEmployeePoliticsRequestReply/saveReply";
+    const queryQuestionnaire = "/sleep_reply/nlEmployeeSleepRequestReply/queryQuestionnaire";
+    const queryQuestionList = "/sleep_reply/nlEmployeeSleepRequestReply/queryQuestionList"
+    const saveReply = "/sleep_reply/nlEmployeeSleepRequestReply/saveReply";
 
     const isSubmitted = ref(false);
 
@@ -151,7 +146,7 @@ export default defineComponent({
       // console.log(cnt);
       if (cnt != 0) {
         alert("请全部选择后提交");
-      } else {
+      }else{
         // todo 需要写后端的接口
         console.log(params);
         await defHttp.post({ url: saveReply, params });
