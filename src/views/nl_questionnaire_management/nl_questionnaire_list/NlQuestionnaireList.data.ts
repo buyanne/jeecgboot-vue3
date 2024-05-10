@@ -270,7 +270,7 @@ export const formSchema: FormSchema[] = [
     }
   },
   {
-    label: "问卷开始时间",
+    label: "开始时间",
     field: "questionStartTime",
     component: "DatePicker",
     componentProps: {
@@ -278,12 +278,12 @@ export const formSchema: FormSchema[] = [
       valueFormat: "YYYY-MM-DD HH:mm:ss"
     },
     colProps: {
-      span: 11,
-      offset: 2
+      span: 8,
+      offset: 4
     }
   },
   {
-    label: "问卷结束时间",
+    label: "结束时间",
     field: "questionEndTime",
     component: "DatePicker",
     componentProps: {
@@ -291,8 +291,8 @@ export const formSchema: FormSchema[] = [
       valueFormat: "YYYY-MM-DD HH:mm:ss"
     },
     colProps: {
-      span: 11,
-      offset: 0
+      span: 8,
+      offset: 2
     }
   },
   // {
