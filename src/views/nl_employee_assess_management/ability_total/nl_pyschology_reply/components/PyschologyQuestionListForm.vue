@@ -110,8 +110,7 @@ export default defineComponent({
     };
     const queryQuestionnaire = "/nl_pyschology_reply/nlEmployeePyschologyRequestReply/queryQuestionnaire";
     const queryQuestionList = "/nl_pyschology_reply/nlEmployeePyschologyRequestReply/queryQuestionList"
-    const saveReply = "/nl_politics_reply" +
-      "/nlEmployeePoliticsRequestReply/saveReply";
+    const saveReply = "/nl_pyschology_reply/nlEmployeePyschologyRequestReply/saveReply";
 
     const isSubmitted = ref(false);
 

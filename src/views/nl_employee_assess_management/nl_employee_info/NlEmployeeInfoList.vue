@@ -1,6 +1,6 @@
 <template>
   <div>
-       <NlEmployeeInfoForm />
+       <NlEmployeeInfoForm style="background-color: white" />
   </div>
 </template>
 

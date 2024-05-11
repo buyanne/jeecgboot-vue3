@@ -186,7 +186,7 @@ function getTableAction(record) {
 
 function handlePreview(record) {
   listId.value = record.id;
-  // console.log(listId.value);
+  console.log(record);
   showTable.value = !showTable.value;
 }
 
