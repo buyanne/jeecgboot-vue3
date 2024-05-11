@@ -9,9 +9,20 @@ export const columns: BasicColumn[] = [
     ifShow: false
   },
   {
-    title:'用户名',
-    align:'center',
-    dataIndex:'employeeName',
+    title: "用户名",
+    align: "center",
+    dataIndex: "employeeName"
+  },
+  {
+    title: "身份证号",
+    align: "center",
+    dataIndex: "idNum"
+  },
+
+  {
+    title: "专家",
+    align: "center",
+    dataIndex: "specialistName"
   },
   {
     title: "测评计划id",
@@ -39,27 +50,30 @@ export const columns: BasicColumn[] = [
     align: "center",
     dataIndex: "specialistId",
     ifShow: false
-  },
-  {
-    title:'专家',
-    align:'center',
-    dataIndex:'specialistName'
   }
 ];
 //查询数据
-export const searchFormSchema: FormSchema[] = [];
+export const searchFormSchema: FormSchema[] = [
+  {
+    label: "姓名",
+    field: "employeeName",
+    component: "Input",
+    componentProps: {}
+  }
+];
 //表单数据
 export const formSchema: FormSchema[] = [
   {
-    label: "employeeId",
+    label: "姓名",
     field: "employeeId",
-    component: "Input"
-  },
-  {
-    label: "测评计划id",
-    field: "planId",
-    component: "InputNumber"
-  },
+    component: "JSelectUser",
+    componentProps: {
+      labelKey: "realname",
+      rowKey: "id"
+    },
+    dynamicDisabled: true
+  }
+  ,
   {
     label: "领导能力打分",
     field: "leadershipScore",
@@ -76,14 +90,13 @@ export const formSchema: FormSchema[] = [
     component: "InputNumber"
   },
   {
-    label: "specialistId",
+    label: "专家",
     field: "specialistId",
-    component: "Input",
-    dynamicRules: ({ model, schema }) => {
-      return [
-        { required: true, message: "请输入specialistId!" }
-      ];
-    }
+    component: "JSearchSelect",
+    componentProps: {
+      dict: "nl_specialist_info,name,id"
+    },
+    dynamicDisabled: true
   },
   // TODO 主键隐藏字段，目前写死为ID
   {

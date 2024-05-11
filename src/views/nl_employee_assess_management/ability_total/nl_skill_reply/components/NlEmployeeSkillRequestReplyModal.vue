@@ -8,8 +8,8 @@
     import {ref, computed, unref} from 'vue';
     import {BasicModal, useModalInner} from '/@/components/Modal';
     import {BasicForm, useForm} from '/@/components/Form/index';
-    import {formSchema} from '../NlEmployeeManagementAssessment.data';
-    import {saveOrUpdate} from '../NlEmployeeManagementAssessment.api';
+    import {formSchema} from '../NlEmployeeSkillRequestReply.data';
+    import {saveOrUpdate} from '../NlEmployeeSkillRequestReply.api';
     // Emits声明
     const emit = defineEmits(['register','success']);
     const isUpdate = ref(true);
@@ -18,8 +18,7 @@
         //labelWidth: 150,
         schemas: formSchema,
         showActionButtonGroup: false,
-        baseColProps: {span: 24},
-
+        baseColProps: {span: 24}
     });
     //表单赋值
     const [registerModal, {setModalProps, closeModal}] = useModalInner(async (data) => {

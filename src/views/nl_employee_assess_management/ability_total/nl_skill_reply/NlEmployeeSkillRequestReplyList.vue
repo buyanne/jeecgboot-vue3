@@ -1,61 +1,47 @@
 <template>
   <div>
-    <!--引用表格-->
-    <!--    <JDictSelectTag v-model="queryParam.username" dict-code="sys_user,realname,id" />-->
-    <BasicTable v-if="isHasPermission" @register="registerTable" :rowSelection="rowSelection">
-
-      <!--操作栏-->
-      <template #action="{ record }">
-        <TableAction :actions="getTableAction(record)"
-                     :dropDownActions="getDropDownAction(record)" />
-      </template>
-      <!--字段回显插槽-->
-      <template #bodyCell="{ column, record, index, text }"></template>
-    </BasicTable>
-    <!-- 表单区域 -->
-    <NlEmployeeIntviewInfoModal @register="registerModal" @success="handleSuccess" />
-
+    <SkillQuestionListForm
+      :listId="listId"
+      :isPreview="isPreview"
+      style="background-color: white"
+    ></SkillQuestionListForm>
   </div>
 </template>
 
-<script lang="ts"
-        name="nl_employee_assess_management/nl_employee_interview_info-nlEmployeeIntviewInfo" setup>
+<script lang="ts" name="nl_skill_reply-nlEmployeeSkillRequestReply" setup>
 import { ref, reactive, computed, unref } from "vue";
-import { BasicTable, useTable, TableAction } from "/@/components/Table";
 import { useModal } from "/@/components/Modal";
 import { useListPage } from "/@/hooks/system/useListPage";
-import NlEmployeeIntviewInfoModal from "./components/NlEmployeeIntviewInfoModal.vue";
-import { columns, searchFormSchema, superQuerySchema } from "./NlEmployeeIntviewInfo.data";
+import { columns, searchFormSchema, superQuerySchema } from "./NlEmployeeSkillRequestReply.data";
 import {
+  list,
   deleteOne,
   batchDelete,
   getImportUrl,
-  getExportUrl,
-  listWithName
-} from "./NlEmployeeIntviewInfo.api";
+  getExportUrl
+} from "./NlEmployeeSkillRequestReply.api";
 import { useUserStore } from "/@/store/modules/user";
-import { usePermission } from "/@/hooks/web/usePermission";
+import SkillQuestionListForm from "./components/SkillQuestionListForm.vue";
+import PyschologyQuestionListForm
+  from "@/views/nl_employee_assess_management/ability_total/nl_pyschology_reply/components/PyschologyQuestionListForm.vue";
 
-const { hasPermission } = usePermission();
 const queryParam = reactive<any>({});
 const checkedKeys = ref<Array<string | number>>([]);
 const userStore = useUserStore();
+let listId = ref({});
+let isPreview = ref(false);
 //注册model
 const [registerModal, { openModal }] = useModal();
-const isHasPermission = hasPermission(["nl_employee_assess_management/nl_employee_interview_info:nl_employee_intview_info:add"]);
-
 //注册table数据
 const { prefixCls, tableContext, onExportXls, onImportXls } = useListPage({
   tableProps: {
-    title: "专家面试预约",
-    api: listWithName,
+    title: "技能测评",
+    api: list,
     columns,
-    useSearchForm: false,
     canResize: false,
     formConfig: {
       //labelWidth: 120,
       schemas: searchFormSchema,
-
       autoSubmitOnEnter: true,
       showAdvancedButton: true,
       fieldMapToNumber: [],
@@ -66,12 +52,11 @@ const { prefixCls, tableContext, onExportXls, onImportXls } = useListPage({
       fixed: "right"
     },
     beforeFetch: (params) => {
-
       return Object.assign(params, queryParam);
     }
   },
   exportConfig: {
-    name: "专家面试预约",
+    name: "技能测评",
     url: getExportUrl,
     params: queryParam
   },
@@ -155,7 +140,7 @@ function handleSuccess() {
 function getTableAction(record) {
   return [
     {
-      label: "预约面试",
+      label: "编辑",
       onClick: handleEdit.bind(null, record)
     }
   ];
@@ -169,8 +154,7 @@ function getDropDownAction(record) {
     {
       label: "详情",
       onClick: handleDetail.bind(null, record)
-    },
-    {
+    }, {
       label: "删除",
       popConfirm: {
         title: "是否确认删除",
@@ -180,6 +164,10 @@ function getDropDownAction(record) {
     }
   ];
 }
+
+
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>

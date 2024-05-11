@@ -13,7 +13,7 @@ import {
 import { SIDE_BAR_BG_COLOR_LIST, HEADER_PRESET_BG_COLOR_LIST } from "./designSetting";
 import { primaryColor } from "../../build/config/themeConfig";
 
-const setting: ProjectConfig = {
+const setting: ProjectConfig ={
   "showSettingButton": true,
   "showDarkModeToggle": true,
   "settingButtonPosition": "auto",
@@ -26,7 +26,7 @@ const setting: ProjectConfig = {
   "fullContent": false,
   "contentMode": "full",
   "showLogo": true,
-  "showFooter": true,
+  "showFooter": false,
   "headerSetting": {
     "bgColor": "#ffffff",
     "fixed": true,
@@ -81,8 +81,7 @@ const setting: ProjectConfig = {
   "canEmbedIFramePage": true,
   "closeMessageOnSwitch": true,
   "removeAllHttpPending": false
-};
-
+}
 
 // ! 改动后需要清空浏览器缓存
 // const setting: ProjectConfig = {
